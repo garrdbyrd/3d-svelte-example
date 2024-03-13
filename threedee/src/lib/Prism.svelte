@@ -1,22 +1,32 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import * as THREE from 'three';
+  import { onMount } from 'svelte';
+  import * as THREE from 'three';
 
-    let container: HTMLElement;
+  let container: HTMLElement;
 
-   function createSimplePrism() {
+  function createSimplePrism() {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   container.appendChild(renderer.domElement);
 
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  // Cube
+  const geometry = new THREE.BoxGeometry(2.0, 2.0, 2.0);
+  const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
+  // Camera
   camera.position.z = 5;
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft white light
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5, 3, 5); // Position the light
+  scene.add(directionalLight);
+
 
   function animate() {
     requestAnimationFrame(animate);
