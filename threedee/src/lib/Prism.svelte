@@ -27,7 +27,6 @@
   directionalLight.position.set(5, 3, 5); // Position the light
   scene.add(directionalLight);
 
-
   function animate() {
     requestAnimationFrame(animate);
     cube.rotation.x += 0.01;
